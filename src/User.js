@@ -1,20 +1,21 @@
 class User {
-  #password;
+  // #password;
   constructor(username, password, age) {
     this.username = username;
-    this.#password = password;
+    this.password = password;
     this.age = age;
     this.loggedIn = false;
   }
   login(password) {
-    if (this.#password === password) {
+    if (this.password === password) {
       this.loggedIn = true;
-      return;
+      return true;
     }
-    throw new Error('incorrect password ');
+    throw new Error('incorrect password');
   }
   logout() {
     this.loggedIn = false;
+    return true;
   }
 }
 

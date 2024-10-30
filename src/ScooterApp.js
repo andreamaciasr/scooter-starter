@@ -19,13 +19,34 @@ class ScooterApp {
   }
 
   loginUser(username, password) {
-    const user = this.registerUser[username];
-    if (user.login(password)) {
+    const user = this.registeredUsers[username];
+    if (user.login(password)) {     
       console.log("user has been logged in");
+      return true;
     } else {
-      throw new Error("no such user is logged in");
+      throw new Error("Username or password is incorrect");
     }
+  }
+
+  logoutUser(username) {
+    const user = this.registeredUsers[username];
+    if (!user) throw new Error("no such user is registered");
+    user.logout();
+    console.log("user is logged out")
+    return true;
+  }
+
+  createScooter(station) {
+    if (!this.stations.hasOwnProperty(station)){
+      throw new Error('no such station');
+    }
+    const scooter = new Scooter(station);
+    this.stations[station].push(scooter);
+    console.log("created new scooter");
+    return scooter;
   }
 }
 
 module.exports = ScooterApp;
+
+
