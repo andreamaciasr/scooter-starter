@@ -17,6 +17,7 @@ class User {
     this.loggedIn = false;
     return true;
   }
+
 }
 
 module.exports = User

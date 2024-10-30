@@ -45,7 +45,20 @@ class ScooterApp {
     console.log("created new scooter");
     return scooter;
   }
+
+  print() {
+    console.log("Registered Users: ", this.registeredUsers);
+    console.log("Stations: ", this.stations);
+    console.log("No. of Scooters at Downtown station: ", this.stations["Downtown"].length);
+    console.log("No. of Scooters at Train station: ", this.stations["Train Station"].length);
+    console.log("No. of Scooters at Park station: ", this.stations["Park"].length);
+  }
 }
+
+const test = new ScooterApp;
+test.createScooter("Park");
+
+test.print();
 
 module.exports = ScooterApp;
 
