@@ -11,13 +11,12 @@ class User {
       this.loggedIn = true;
       return true;
     }
-    throw new Error('incorrect password');
+    throw new Error("incorrect password");
   }
   logout() {
     this.loggedIn = false;
     return true;
   }
-
 }
 
-module.exports = User
+module.exports = User;
