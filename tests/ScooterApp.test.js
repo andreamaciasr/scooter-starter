@@ -86,22 +86,69 @@ describe("createScooter method tests", () => {
     scooterApp = new ScooterApp();
   });
 
-  test('creates an instance of Scooter class', () => {
+  test("creates an instance of Scooter class", () => {
     const scooter = scooterApp.createScooter("Park");
     expect(scooter).toBeInstanceOf(Scooter);
-  })
-  test('scooter gets added to the station', () => {
+  });
+  test("scooter gets added to the station", () => {
     const scooter = scooterApp.createScooter("Park");
     expect(scooterApp.stations["Park"].length).toBe(1);
+  });
+  test("throws error on unexistent station", () => {
+    expect(() =>
+      scooterApp.createScooter("ketchup").toThrow("no such station")
+    );
+  });
+});
+
+describe("Tests for dockScooter", () => {
+  let scooterApp;
+  let scooter;
+
+  beforeEach(() => {
+    scooterApp = new ScooterApp();
+    scooter = new Scooter();
+  });
+
+  test("adds scooter and docks it", () => {
+    scooterApp.dockScooter(scooter, "Park");
+    expect(scooterApp.stations["Park"].length).toBe(1);
+  });
+  test("throws error if scooter is already in the station", () => {
+    scooterApp.dockScooter(scooter, "Park");
+    expect(() =>
+      scooterApp
+        .dockScooter("Park", scooter)
+        .toThrow("scooter already at station")
+    );
+  });
+  test("throws error with unexistent station", () => {
+    expect(() =>
+      scooterApp.dockScooter("egg", scooter).toThrow("no such station")
+    );
+  });
+});
+
+describe("Tests for rentScooter", () => {
+  let scooterApp;
+  let user;
+
+  beforeEach(() => {
+    scooterApp = new ScooterApp();
+    user = new User("Joe Bloggs", "test123", 21);
+  });
+
+  test("Removes scooter from station & rents it to the user", () => {
+    let scooter = scooterApp.createScooter("Park");
+    scooterApp.rentScooter(scooter, user);
+    expect(scooterApp.stations["Park"].length).toBe(0);
+    expect(scooter.user.username).toBe(user.username);
+  });
+
+  test("Throws error when the scooter is already rented", () => {
+    let scooter = scooterApp.createScooter("Park");
+    scooter.rent(user);
+    expect(() => scooterApp.rentScooter(scooter, user)).toThrow('scooter already rented');
   })
-  test('throws error on unexistent station', () => {
-    expect(() => scooterApp.createScooter("ketchup").toThrow('no such station'));
-  })
-})
 
-// createScooter(station)
-// dockScooter(scooter, station)
-// rentScooter(scooter, user)
-// print()
-
-
+});
